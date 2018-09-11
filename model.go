@@ -12,11 +12,17 @@ type product struct {
 }
 
 func (p *product) createProduct(db *sql.DB) error {
-	return errors.New("Not implemented")
+	err := db.QueryRow("INSERT INTO products(name, price) VALUES ($1, $2) RETURNING id", p.Name, p.Price).Scan(&p.ID)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (p *product) getProduct(db *sql.DB) error {
-	return errors.New("Not implemented")
+	return db.QueryRow("SELECT name, price FROM products WHERE id=$1", p.ID).Scan(&p.Name, &p.Price)
 }
 
 func getProducts(db *sql.DB, start, count int) ([]product, error) {
