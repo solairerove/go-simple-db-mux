@@ -78,7 +78,7 @@ func TestCreateProduct(t *testing.T) {
 
 	payload := []byte(`{"name":"test product", "price":11.22}`)
 
-	req, _ := http.NewRequest("POST", "/product", bytes.NewBuffer(payload))
+	req, _ := http.NewRequest("POST", "/products", bytes.NewBuffer(payload))
 	response := executeRequest(req)
 
 	checkResponseCode(t, http.StatusCreated, response.Code)
@@ -129,11 +129,11 @@ func TestUpdateProduct(t *testing.T) {
 	var m map[string]interface{}
 	json.Unmarshal(response.Body.Bytes(), &m)
 
-	if m["name"] != originalProduct["name"] {
+	if m["name"] == originalProduct["name"] {
 		t.Errorf("Expected the name to remain the same (%v). Got %v", originalProduct["name"], m["name"])
 	}
 
-	if m["price"] != originalProduct["price"] {
+	if m["price"] == originalProduct["price"] {
 		t.Errorf("Expected the price to remain the same (%v). Got %v", originalProduct["price"], m["price"])
 	}
 
