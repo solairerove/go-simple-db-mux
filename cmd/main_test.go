@@ -10,13 +10,13 @@ import (
 	"strconv"
 	"testing"
 
-	"."
+	"github.com/solairerove/go-simple-db-mux/app"
 )
 
-var a main.App
+var a app.App
 
 func TestMain(m *testing.M) {
-	a = main.App{}
+	a = app.App{}
 	a.Initialize("griotrard_user", "griotrard_pass", "griotrard")
 
 	ensureTableExists()
